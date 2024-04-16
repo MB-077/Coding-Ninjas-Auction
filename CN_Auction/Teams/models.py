@@ -7,8 +7,8 @@ class Team(models.Model):
    team_name = models.CharField(max_length=40, null=False)
 
    correct_answers = models.IntegerField(default=0)  # Incremental Logic in VIEWS [To be Implemented]
-   purse_value = models.FloatField(default=0.0)  # Calculation Logic in VIEWS [To be Implemented]
-   time_taken = models.IntegerField(default=900)  # Time in SECONDS ONLY , Default = 15 mins
+   purse_value = models.FloatField(default=40)  # Calculation Logic in VIEWS [To be Implemented]
+   points_scored = models.IntegerField(default=0)  # Incremental Logic in VIEWS [To be Implemented]
 
    def __str__(self):
       return self.team_name
