@@ -5,7 +5,6 @@ class Team(models.Model):
    
    team_id = models.IntegerField(primary_key=True)
    team_name = models.CharField(max_length=40, null=False)
-
    correct_answers = models.IntegerField(default=0)  # Incremental Logic in VIEWS [To be Implemented]
    purse_value = models.FloatField(default=40)  # Calculation Logic in VIEWS [To be Implemented]
    points_scored = models.IntegerField(default=0)  # Incremental Logic in VIEWS [To be Implemented]

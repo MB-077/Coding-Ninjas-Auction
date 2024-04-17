@@ -1,0 +1,44 @@
+{% load static %}
+
+<!-- group_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group List</title>
+    <link rel="stylesheet" href="{% static 'Teams/group_list.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="team-purse-container">
+            <h2>Team Purse Values</h2>
+            <ul>
+                {% for team in teams %}
+                <li>{{ team.team_name }}: {{ team.purse_value }} Cr</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="assigned-group-container">
+            <h2>Assigned Groups</h2>
+            <ul>
+                {% for group in groups %}
+                <li>
+                    <form action="{% url 'group_list' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="group_id" value="{{ group.group_id }}">
+                        Group ID: {{ group.group_id }}<br>
+                        Group Price: {{ group.group_price }}<br>
+                        Group Points: {{ group.group_points }}<br>
+                        Allotted Team ID: {{ group.alloted_team.team_id }} <!-- Access related team id --><br>
+                        Allotted Team: {{ group.alloted_team.team_name }} <!-- Access related team name -->
+                    </form>
+                </li>
+                <br>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

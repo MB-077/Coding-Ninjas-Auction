@@ -1,0 +1,72 @@
+/* group_list.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #56ccf2, #2f80ed); /* Set body background to the gradient */
+}
+
+.container {
+    padding: 20px;
+}
+
+.team-purse-container,
+.assigned-group-container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    overflow-y: auto;
+    margin-bottom: 20px; /* Add margin between containers */
+}
+
+h2 {
+    margin-top: 0;
+    color: #080808;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid transparent; /* Remove border bottom */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: inline;
+}
+
+.group-info {
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+}
+
+.group-id {
+    color: #6ab5ff;
+}
+
+.group-price {
+    color: #4cd137;
+}
+
+.group-points {
+    color: #fbc531;
+}
+
+.allotted-team-id {
+    color: #e74c3c;
+}
+
+.allotted-team {
+    color: #9b59b6;
+}
