@@ -60,7 +60,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            "Teams/templates/Teams"
+            "Teams/templates/Teams",
+            "Questions/templates",
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,6 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "Teams/static",
+    "Questions/static",
 ]
 
 # Default primary key field type
