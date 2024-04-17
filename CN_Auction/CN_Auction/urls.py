@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Teams.views import leaderboard_view, group_list
+from Teams.views import leaderboard_view, group_list, question_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('leaderboard/', leaderboard_view, name='leaderboard'),
     path('groups/', group_list, name='group_list'),
+    path('questions/', question_view, name='questions'),
 ]

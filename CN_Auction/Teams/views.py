@@ -40,3 +40,7 @@ def group_list(request):
     }
 
     return render(request, 'group_list.html', context)
+
+
+def question_view(request):
+    return render(request, 'index.html')
