@@ -1,9 +1,15 @@
 import pandas as pd
 import os
 import warnings
+import math
+import random
 # from Players.models import Individual
 
 warnings.filterwarnings("ignore")
+
+# Sigmoid = lambda x: 1 / ( 1 + ( math.e ) ** ( -x ) ) # Sigmoid Function
+# Sigmoid = lambda x: (1/(10*( 1+(math.e)**(-0.00088*x) )))*(0.0000000001*(x**2) + 0.05*x + 0.2)
+Sigmoid = lambda x: x/1000
 
 # One time operations
 def calculate_bowling_rating(row) -> float:
@@ -28,10 +34,12 @@ def calculate_bowling_rating(row) -> float:
     
     # Calculate overall rating
     rating = ((W * W_weight + E * E_weight + S * S_weight + P * P_weight) /
-              (W_weight + E_weight + S_weight + P_weight)) * 10
-    
-    # Ensure rating is between 1 and 10
-    return max(1, min(rating, 10))
+              (W_weight + E_weight + S_weight + P_weight))
+
+    if rating > 10:
+        return Sigmoid(rating)
+    else:
+        return max(1, min(rating, 10))
 
 def calculate_batting_rating(row) -> float:
     try:
@@ -52,29 +60,40 @@ def calculate_batting_rating(row) -> float:
     # N = row['NO']               # Number of times not out
     
     # Define weights for each factor
-    R_weight = 0.2
-    A_weight = 0.15
-    S_weight = 0.15
-    C_weight = 0.2
-    B_weight = 0.2
-    N_weight = 0.1
+    # R_weight = 0.2
+    # A_weight = 0.15
+    # S_weight = 0.15
+    # C_weight = 0.2
+    # B_weight = 0.0015
+    # N_weight = 0.1
+    R_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+    A_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+    S_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+    C_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+    B_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+    N_weight = random.randint(0, 9999999) / random.randint(0, 9999999)
+
+    print("Weights:", R_weight, A_weight, S_weight, C_weight, B_weight, N_weight)
 
     # print("[ DEBUG ] Params:",R,A,S,C,B,N)
     
     # Calculate overall rating
     rating = ((R * R_weight + A * A_weight + S * S_weight + C * C_weight + B * B_weight + N * N_weight) /
-              (R_weight + A_weight + S_weight + C_weight + B_weight + N_weight))
+              (R_weight + A_weight + S_weight + C_weight + B_weight + N_weight)) * 10
     
     # Ensure rating is between 1 and 10
     # return max(1, min(rating, 10))
+    # rating = math.floor((rating) * 10)
+    rating = math.floor((rating/1000)*10)
     print("[DEBUG] Rating Bat:", rating)
-    return max(min(rating, 10), 1)
+    return rating
 
 def process_ipl_players_csv() -> None:
     IPL_DataFrame = pd.read_csv(os.path.join("csv", "IPL_Players.csv"))
     IPL_DataFrame["IsWicketKeeper"] = None
     IPL_DataFrame["BowlingRating"] = None
     IPL_DataFrame["BattingRating"] = None
+    IPL_DataFrame["FieldingRating"] = None
 
     Batting_df = pd.read_csv(os.path.join("csv","BATTING STATS - IPL_2022.csv"))
     Batting_df = Batting_df.replace('-', '0', regex=True)
@@ -107,7 +126,8 @@ def process_ipl_players_csv() -> None:
         batting_row = Batting_df.loc[Batting_df["Player"] == IPL_DataFrame["PLAYER"][i]]
         if not batting_row.empty:
             # print(batting_row)
-            IPL_DataFrame["BattingRating"][i] = batting_row['Rating'].values
+            # IPL_DataFrame["BattingRating"][i] = batting_row['Rating'].values
+            IPL_DataFrame["BattingRating"][i] = random.randint(1, 10)
             # print(batting_row['Rating'])
         else:
             IPL_DataFrame["BattingRating"][i] = 0
@@ -115,9 +135,12 @@ def process_ipl_players_csv() -> None:
         # Whether player exists in Bowling_df
         bowling_row = Bowling_df.loc[Bowling_df["Player"] == IPL_DataFrame["PLAYER"][i]]
         if not bowling_row.empty:
-            IPL_DataFrame["BowlingRating"][i] = bowling_row['Rating'].values
+            # IPL_DataFrame["BowlingRating"][i] = bowling_row['Rating'].values
+            IPL_DataFrame["BowlingRating"][i] = random.randint(1, 10)
         else:
             IPL_DataFrame["BowlingRating"][i] = 0
+
+        IPL_DataFrame["FieldingRating"][i] = random.randint(1, 10)
 
         if IPL_DataFrame["ROLE"][i] == "Wicket-keeper":
             IPL_DataFrame["IsWicketKeeper"][i] = 1
@@ -132,7 +155,7 @@ def process_ipl_players_csv() -> None:
             IPL_DataFrame["PRICE"][i] = float(IPL_DataFrame["PRICE"][i].split(" ")[0])*0.01
             continue
     
-    IPL_DataFrame.to_csv(os.path.join("processed_csv", "withBatBowlv2_IPL_Players.csv"), index=False)
+    IPL_DataFrame.to_csv(os.path.join("processed_csv", "random_IPL_Players.csv"), index=False)
     print(IPL_DataFrame)
 
 if __name__ == "__main__":
