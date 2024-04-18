@@ -12,10 +12,12 @@ body {
 
 .team-purse-container,
 .assigned-group-container {
+    position: relative;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+    backdrop-filter: blur(10px); /* Apply blur effect */
     overflow-y: auto;
     margin-bottom: 20px; /* Add margin between containers */
 }
@@ -36,9 +38,9 @@ ul {
 li {
     margin-bottom: 20px;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: rgba(211, 211, 211, 0.8); /* Light gray with higher opacity */
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 form {
@@ -69,4 +71,35 @@ form {
 
 .allotted-team {
     color: #9b59b6;
+}
+
+/* Style for each group container */
+.group-container {
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.group-info {
+    float: left;
+    font-weight: normal; /* Remove bold style */
+}
+
+/* Improve padding for player names */
+.player-names {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Align to the right edge of the parent container */
+    margin-top: 0;
+    padding: 0;
+    border-radius: 5px;
+    display: flex; /* Use Flexbox */
+    flex-direction: column; /* Align player names vertically */
+    text-align: right; /* Align text to the right */
+}
+
+.player-names p {
+    margin: 1px 0; /* Add vertical margin between player names */
+    font-size: 18px; /* Increase font size */
+    color: #333;
 }

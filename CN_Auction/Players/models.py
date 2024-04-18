@@ -4,6 +4,7 @@ from Teams.models import Team
 
 
 # Create your models here.
+
 class Group(models.Model):
 
    group_id = models.IntegerField(primary_key=True)

@@ -15,17 +15,23 @@
     
     <section id="leaderboard">
         <h2>Top Teams</h2>
-        <ol>
-            <li>Team 1</li>
-            <li>Team 2</li>
-            <li>Team 3</li>
-            <li>Team 4</li>
-            <li>Team 5</li>
-        </ol>
+        {% for team in teams %}
+        <div class="team-container">
+            <div class="team-info">
+                <div class="team-heading">
+                    <h3>Team ID: {{ team.team_id }}</h3>
+                    <h3>Team Name: {{ team.team_name }}</h3>
+                </div>
+                <div class="team-points">
+                    <p>Total Points Scored: {{ team.total_points }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </section>
-    
+
     <footer>
-        <p>&copy; 2024 Leaderboard App</p>
+        <p>2024 CN Auctions Finalist</p>
     </footer>
 </body>
 </html>

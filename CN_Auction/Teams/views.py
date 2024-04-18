@@ -1,26 +1,38 @@
-from django.contrib import messages
-from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.db.models import Sum
 from Teams.models import Team
-from Players.models import Group
+from Players.models import Group, Individual, Stat
 
 # Create your views here.
 
-def leaderboard_view(request):
-    return render(request, 'leaderboard.html')
+
+def question_view(request):
+    return render(request, 'index.html')
+
+
 
 def group_list(request):
     # Fetch all teams and groups
     teams = Team.objects.all()
     groups = Group.objects.all()
 
+    # Calculate group points for each group
+    for group in groups:
+        # Sum up the stats of all players in the group
+        group_stats = Stat.objects.filter(player__group=group)
+        total_points = group_stats.aggregate(
+            total_points=Sum('fielding') + Sum('bowling') + Sum('batting')
+        )['total_points'] or 0  # Ensure 0 if no stats found
+        
+        # Update the group points
+        group.group_points = total_points
+        group.save()
+    
     # Fetch existing assignments from session first
     previous_assignment = request.session.get('existing_assignments', [])
 
     # Check for new group assignments and update purse value accordingly
     existing_assignments = set(group.group_id for group in groups if group.alloted_team_id is not None)
-    print(f"Existing Assignments: {existing_assignments}")
 
     for group in groups:
         # Check if the group was previously assigned to any team
@@ -28,7 +40,6 @@ def group_list(request):
             team = Team.objects.get(team_id=group.alloted_team_id)
             team.purse_value -= group.group_price
             team.save()
-            print(f"Deducted group price from purse value for Group ID - {group.group_id}")
 
     # Store existing assignments in session
     request.session['existing_assignments'] = list(existing_assignments)
@@ -42,5 +53,36 @@ def group_list(request):
     return render(request, 'group_list.html', context)
 
 
-def question_view(request):
-    return render(request, 'index.html')
+
+def leaderboard_view(request):
+    # Get all teams
+    all_teams = Team.objects.all()
+
+    # Filter teams with at least 11 players and at least one wicketkeeper
+    qualified_teams = []
+    for team in all_teams:
+        num_players = Individual.objects.filter(group__alloted_team=team).count()
+        num_wicketkeepers = Individual.objects.filter(group__alloted_team=team, stats__wicketkeeper=True).count()
+        if num_players >= 11 and num_wicketkeepers >= 1:
+            qualified_teams.append(team)
+
+    # Calculate total points for each qualified team and store in a dictionary
+    total_points_dict = {}
+    for team in qualified_teams:
+        total_points = 0
+        assigned_groups = Group.objects.filter(alloted_team=team)
+        for group in assigned_groups:
+            total_points += group.group_points
+        total_points_dict[team] = total_points
+        # Add the total_points attribute to the team object
+        team.total_points = total_points
+
+    # Sort teams by total points scored in descending order
+    sorted_teams = sorted(qualified_teams, key=lambda team: team.total_points, reverse=True)
+
+    # Pass the data to the template
+    context = {
+        'teams': sorted_teams,
+    }
+
+    return render(request, 'leaderboard.html', context)
