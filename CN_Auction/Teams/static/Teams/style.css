@@ -8,7 +8,7 @@ body {
     height: 100vh; /* Ensure full viewport height */
     margin: 0; /* Remove default margin */
 
-    background-image: url('stadium4.jpg');
+    background-image: url('./stadiumImg2.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -17,6 +17,17 @@ body {
 .container {
     text-align: center;
     margin-bottom: 20px; /* Adjust margin-bottom as needed */
+}
+
+.header-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+    align-items: center;
 }
 
 h1 {
@@ -33,6 +44,7 @@ h1 {
     color: #ffffff; /* White */
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition */
+    margin-bottom: 20px;
 }
 
 #start-btn:hover {
@@ -49,13 +61,13 @@ h1 {
 }
 
 .question-card {
-    background-color: #262424; /* White */
-    color: #ffffff;
+    background-color: #fff; /* White */
+    color: #000;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
-    border: 2px solid #ffa500; /* Orange border */
+    border: 2px solid #208eef; 
 }
 
 .question-text {
@@ -66,8 +78,8 @@ h1 {
 
 .options {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Arrange options in two columns */
-    gap: 10px; /* Spacing between options */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
 }
 
 .option-btn {
@@ -75,43 +87,44 @@ h1 {
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: #faac1b; /* Orange */
-    color: #ffffff; /* White */
+    background-color: #208eef; 
+    color: #fff; 
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
 .option-btn:hover {
-    background-color: #ff8c00; /* Darker shade of orange on hover */
+    background-color: #2172b1; 
 }
 
 .option-btn.clicked {
-    background-color: #f0ebeb; /* Light gray for clicked option */
-    border: 2px solid #333333; /* Dark border */
-    color: #333333; /* Dark text */
+    background-color: #f0ebeb; 
+    border: 2px solid #333333; 
+    color: #333333; 
 }
 
 #timer {
     margin-top: 20px;
     font-size: 24px;
-    text-align: center;
+    text-align: right;
+    margin-right: 20px;
 }
 
 #submit-btn {
     display: block;
-    margin: 20px auto; /* Added margin to separate from options */
+    margin: 20px auto; 
     padding: 12px 24px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50; /* Green */
-    color: #ffffff; /* White */
+    background-color: #4CAF50; 
+    color: #ffffff;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
 #submit-btn:hover {
-    background-color: #45a049; /* Darker shade of green on hover */
+    background-color: #45a049; 
 }
 
 .submitted-message {
@@ -120,7 +133,23 @@ h1 {
     text-align: center;
     margin-top: 20px;
 }
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
 
+.submitted-message {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.time-taken {
+    font-size: 18px;
+}
 /* Smaller font size for smaller screens */
 @media only screen and (max-width: 600px) {
     h1 {
