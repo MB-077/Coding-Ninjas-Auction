@@ -89,6 +89,42 @@ def leaderboard_view(request):
 
 
 
+# def allot_data(request):
+#     if request.method == 'POST':
+#         # Get form data
+#         group_id = request.POST.get('group_id')
+#         group_price = float(request.POST.get('group_price'))
+#         alloted_team_id = request.POST.get('alloted_team_id')
+
+#         # Check if Allotted Team ID field is empty
+#         if not alloted_team_id:
+#             return JsonResponse({'error': 'Please fill out the Allotted Team ID field.'})
+
+#         # Fetch the Team instance based on the ID
+#         try:
+#             alloted_team = Team.objects.get(team_id=alloted_team_id)
+#         except Team.DoesNotExist:
+#             return JsonResponse({'error': 'Allotted Team with given ID does not exist.'})
+
+#         # Check if group price exceeds purse value
+#         if group_price > alloted_team.purse_value:
+#             return JsonResponse({'error': 'Insufficient purse value'})
+
+#         # Create or update Group object
+#         group, created = Group.objects.update_or_create(
+#             group_id=group_id,
+#             defaults={'group_price': group_price, 'alloted_team_id': alloted_team_id}
+#         )
+
+#         alloted_team.save()
+
+#         return redirect('allot_data')  # Redirect to success page after form submission
+    
+#     return render(request, 'allot_data.html')
+
+
+
+
 def allot_data(request):
     if request.method == 'POST':
         # Get form data
@@ -110,6 +146,10 @@ def allot_data(request):
         if group_price > alloted_team.purse_value:
             return JsonResponse({'error': 'Insufficient purse value'})
 
+        # Check if the group has already been assigned to a team
+        if Group.objects.filter(group_id=group_id, alloted_team_id=alloted_team_id).exists():
+            return JsonResponse({'error': 'This group has already been assigned to a team.'})
+
         # Create or update Group object
         group, created = Group.objects.update_or_create(
             group_id=group_id,
@@ -118,6 +158,6 @@ def allot_data(request):
 
         alloted_team.save()
 
-        return redirect('allot_data')  # Redirect to success page after form submission
-    
+        return JsonResponse({})  # Empty response for success
+
     return render(request, 'allot_data.html')

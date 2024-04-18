@@ -9,56 +9,59 @@
 <link rel="stylesheet" type="text/css" href="{% static 'Teams/allot_data.css' %}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('form').submit(function(event) {
-        event.preventDefault(); // Prevent form submission
-        
-        // Check if Group ID field is empty
-        var groupID = $('#group_id').val();
-        if (groupID.trim() === '') {
-            alert('Please fill out the Group ID field.');
-            return;
-        }
-        
-        // Check if Group Price field is empty
-        var groupPrice = $('#group_price').val();
-        if (groupPrice.trim() === '') {
-            alert('Please fill out the Group Price field.');
-            return;
-        }
-        
-        // Check if Allotted Team field is empty
-        var allottedTeamID = $('#alloted_team_id').val();
-        if (allottedTeamID.trim() === '') {
-            alert('Please fill out the Allotted Team ID field.');
-            return;
-        }
-        
-        // Serialize form data
-        var formData = $(this).serialize();
-        
-        // Send POST request
-        $.ajax({
-            type: 'POST',
-            url: '/allot_data/',
-            data: formData,
-            success: function(response) {
-                // Check if there's an error
-                if (response.error) {
-                    // Show popup with error message
-                    alert(response.error);
-                } else {
-                    // Redirect to success page
-                    window.location.href = '/allot_data/';
-                }
-            },
-            error: function(xhr, errmsg, err) {
-                console.log(xhr.status + ': ' + xhr.responseText); // Log any errors
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Check if Group ID field is empty
+            var groupID = $('#group_id').val();
+            if (groupID.trim() === '') {
+                alert('Please fill out the Group ID field.');
+                return;
             }
+            
+            // Check if Group Price field is empty
+            var groupPrice = $('#group_price').val();
+            if (groupPrice.trim() === '') {
+                alert('Please fill out the Group Price field.');
+                return;
+            }
+            
+            // Check if Allotted Team field is empty
+            var allottedTeamID = $('#alloted_team_id').val();
+            if (allottedTeamID.trim() === '') {
+                alert('Please fill out the Allotted Team ID field.');
+                return;
+            }
+            
+            // Serialize form data
+            var formData = $(this).serialize();
+            
+            // Send POST request
+            $.ajax({
+                type: 'POST',
+                url: '/allot_data/',
+                data: formData,
+                success: function(response) {
+                    // Check if there's an error
+                    if (response.error) {
+                        // Show popup with error message
+                        alert(response.error);
+                    } else if (response.already_assigned) {
+                        // Show popup indicating that the group has already been assigned
+                        alert('This group has already been assigned to a team.');
+                    } else {
+                        // Redirect to success page
+                        window.location.href = '/allot_data/';
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ': ' + xhr.responseText); // Log any errors
+                }
+            });
         });
     });
-});
-</script>
+    </script>
 </head>
 <body>
 
