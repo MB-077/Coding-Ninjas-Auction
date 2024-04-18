@@ -22,6 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('leaderboard/', leaderboard_view, name='leaderboard'),
     path('groups/', group_list, name='group_list'),
-    path('questions/', question_view, name='questions'),
+    path('', question_view, name='questions'),
     path('allot_data/', allot_data, name='allot_data')
 ]

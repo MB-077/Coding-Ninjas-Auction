@@ -1,3 +1,11 @@
 venv/
 vir_env/
 db.sqlite3
+./Players/__pycache__/
+./Players/migrations/
+./Players/__pycache__/
+./Players/migrations/
+./Questions/__pycache__/
+./Questions/migrations/
+./Teams/__pycache__/
+./Teams/migrations/
