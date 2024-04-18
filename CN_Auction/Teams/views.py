@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Sum
 from Teams.models import Team
 from Players.models import Group, Individual, Stat
-
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -86,3 +86,27 @@ def leaderboard_view(request):
     }
 
     return render(request, 'leaderboard.html', context)
+
+
+
+def allot_data(request):
+    if request.method == 'POST':
+        group_id = request.POST.get('group_id')
+        group_price = float(request.POST.get('group_price'))
+        alloted_team_name = request.POST.get('alloted_team')
+
+        # Fetch the Team instance based on the name
+        alloted_team = Team.objects.get(team_name=alloted_team_name)
+
+        # Check if group price exceeds purse value
+        if group_price > alloted_team.purse_value:
+            return JsonResponse({'error': 'Insufficient purse value'})
+
+        # Create or update Group object
+        group, created = Group.objects.update_or_create(
+            group_id=group_id,
+            defaults={'group_price': group_price, 'alloted_team': alloted_team}
+        )
+
+        return redirect('allot_data')  # Redirect to success page after form submission
+    return render(request, 'allot_data.html')
