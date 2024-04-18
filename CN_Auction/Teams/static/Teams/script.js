@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
         messageElement.textContent = `Submitted successfully!\nTime taken: ${totalTimeTaken} seconds`;
         messageElement.classList.add("submitted-message"); // Add CSS class
         quizContainer.appendChild(messageElement);
+        
 
         // Send totalTimeTaken to backend for storage
     }
