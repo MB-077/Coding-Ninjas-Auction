@@ -91,12 +91,20 @@ def leaderboard_view(request):
 
 def allot_data(request):
     if request.method == 'POST':
+        # Get form data
         group_id = request.POST.get('group_id')
         group_price = float(request.POST.get('group_price'))
-        alloted_team_name = request.POST.get('alloted_team')
+        alloted_team_id = request.POST.get('alloted_team_id')
 
-        # Fetch the Team instance based on the name
-        alloted_team = Team.objects.get(team_name=alloted_team_name)
+        # Check if Allotted Team ID field is empty
+        if not alloted_team_id:
+            return JsonResponse({'error': 'Please fill out the Allotted Team ID field.'})
+
+        # Fetch the Team instance based on the ID
+        try:
+            alloted_team = Team.objects.get(team_id=alloted_team_id)
+        except Team.DoesNotExist:
+            return JsonResponse({'error': 'Allotted Team with given ID does not exist.'})
 
         # Check if group price exceeds purse value
         if group_price > alloted_team.purse_value:
@@ -105,8 +113,11 @@ def allot_data(request):
         # Create or update Group object
         group, created = Group.objects.update_or_create(
             group_id=group_id,
-            defaults={'group_price': group_price, 'alloted_team': alloted_team}
+            defaults={'group_price': group_price, 'alloted_team_id': alloted_team_id}
         )
 
+        alloted_team.save()
+
         return redirect('allot_data')  # Redirect to success page after form submission
+    
     return render(request, 'allot_data.html')

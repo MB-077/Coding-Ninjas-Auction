@@ -28,9 +28,9 @@ $(document).ready(function() {
         }
         
         // Check if Allotted Team field is empty
-        var allottedTeam = $('#alloted_team').val();
-        if (allottedTeam.trim() === '') {
-            alert('Please fill out the Allotted Team field.');
+        var allottedTeamID = $('#alloted_team_id').val();
+        if (allottedTeamID.trim() === '') {
+            alert('Please fill out the Allotted Team ID field.');
             return;
         }
         
@@ -75,8 +75,8 @@ $(document).ready(function() {
             <input type="number" id="group_price" name="group_price" step="0.01" required>
         </div>
         <div class="form-group">
-            <label for="alloted_team">Allotted Team:</label>
-            <input type="text" id="alloted_team" name="alloted_team" required>
+            <label for="alloted_team_id">Allotted Team ID:</label>
+            <input type="number" id="alloted_team_id" name="alloted_team_id" required>
         </div>
         <input type="submit" value="Submit">
     </form>
