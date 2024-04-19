@@ -1,4 +1,17 @@
-document.addEventListener("DOMContentLoaded", function() {
+// JavaScript validation logic
+function validateTeamID() {
+    // Check if Team ID field is empty
+    var teamID = $('#team-id').val();
+    if (teamID.trim() === '') {
+        alert('Please fill out the Team ID field.');
+        return false;
+    } else {
+        $('#error-message').text(''); // Clear error message if there was one
+        return true;
+    }
+}
+
+$(document).ready(function() {
     const timerElement = document.createElement("div"); // Declare timerElement globally
     let startTime, timerInterval;
 
@@ -54,6 +67,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showQuestionsAndStartTimer() {
+        const teamIdInput = document.getElementById("team-id");
+        if (teamIdInput.value.trim() === "") {
+            teamIdInput.setCustomValidity("Please fill out this field."); // Show custom error message
+            teamIdInput.reportValidity(); // Display the error message
+            return;
+        }
+
         displayQuestions();
         startTimer();
         document.querySelector(".container").style.display = "none"; // Hide container with title and start button
@@ -77,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         clearInterval(timerInterval);
         const endTime = new Date();
         const totalTimeTaken = Math.round((endTime - startTime) / 1000); // Total time taken in seconds
-        console.log("Total time taken: " + totalTimeTaken + " seconds");
+        console.log("Total time taken: " + totalTimeTaken);
     
         // Calculate the number of correct answers
         let correctAnswers = 0;
@@ -93,13 +113,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Calculate the purse value based on correct answers and time taken
         let purseValue = 40 + correctAnswers * 10; // Start with default value and add bonus for correct answers
-        purseValue = Math.min(100, purseValue); // Ensure purse value does not exceed 100 Cr
+        purseValue = Math.min(100, purseValue); // Ensure purse value does not exceed 100
     
         // Adjust purse value based on time taken
         const maxTime = 1800; // 30 minutes in seconds
         const timeFactor = 1 - (totalTimeTaken / maxTime); // Calculate the factor based on time taken
         purseValue *= timeFactor; // Adjust purse value based on time taken
-        purseValue = Math.round(Math.max(40, purseValue)); // Ensure purse value is at least 40 Cr and round to nearest integer
+        purseValue = Math.round(Math.max(40, purseValue)); // Ensure purse value is at least 40
     
         console.log("Purse value: " + purseValue);
     
@@ -107,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const formData = new FormData();
         formData.append('correct_answers', correctAnswers);
         formData.append('purse_value', purseValue);
-        formData.append('team_id', document.querySelector(".inputBox").value); // Assuming the team ID is entered in an input box
+        formData.append('team_id', document.getElementById("team-id").value); // Get the team ID from the input box
     
         fetch(window.location.href, {
             method: 'POST',
@@ -132,13 +152,34 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Display the message
         const messageElement = document.createElement("div");
-        messageElement.textContent = `Submitted successfully!\nCorrect answers: ${correctAnswers}\nTime taken: ${totalTimeTaken} seconds\nPurse value: ${purseValue} Cr`;
+        messageElement.textContent = `Submitted successfully!\nCorrect answers: ${correctAnswers}\nTime taken: ${totalTimeTaken} seconds\nPurse value: ${purseValue}`;
         messageElement.classList.add("submitted-message"); // Add CSS class
         quizContainer.appendChild(messageElement);
     }
 
-    window.onload = () => {
-        document.getElementById("start-btn").addEventListener("click", showQuestionsAndStartTimer);
-        document.getElementById("submit-btn").addEventListener("click", submitQuiz);
-    };
+    // Enable the start button when a team ID is entered
+    document.getElementById("team-id").addEventListener("input", function() {
+        const startButton = document.getElementById("start-btn");
+        if (this.value.trim() !== "") {
+            startButton.disabled = false;
+        } else {
+            startButton.disabled = true;
+        }
+        // Remove the custom validation message when the input is changed
+        this.setCustomValidity("");
+    });
+
+    // Enable form submission when Enter key is pressed in the team ID input
+    document.getElementById("team-id").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission
+            showQuestionsAndStartTimer(); // Start the quiz
+        }
+    });
+
+    // Start the quiz when the start button is clicked
+    document.getElementById("start-btn").addEventListener("click", showQuestionsAndStartTimer);
+
+    // Submit the quiz when the submit button is clicked
+    document.getElementById("submit-btn").addEventListener("click", submitQuiz);
 });

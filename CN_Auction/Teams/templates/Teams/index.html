@@ -7,16 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="{% static 'Teams/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const csrfToken = "{{ csrf_token }}";
+
+        // JavaScript validation logic
+        $(document).ready(function() {
+            function validateTeamID() {
+                // Check if Team ID field is empty
+                var teamID = $('#team-id').val();
+                if (teamID.trim() === '') {
+                    alert('Please fill out the Team ID field.');
+                    return false;
+                } else {
+                    $('#error-message').text(''); // Clear error message if there was one
+                    return true;
+                }
+            }
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <div class="header-container">
             <h1>CNTC IPL Auction</h1>
-            <form action="">
-                <input type="text" placeholder="Team ID" class="inputBox">
+            <form id="team-form" action="">
+                <input type="text" placeholder="Team ID" class="inputBox" id="team-id">
+                <div id="error-message" style="color: red;"></div> <!-- Error message container -->
             </form>
             <button id="start-btn">Start</button>
         </div>
