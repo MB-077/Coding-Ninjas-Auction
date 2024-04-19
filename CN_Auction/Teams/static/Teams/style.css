@@ -57,55 +57,33 @@ h1 {
 }
 
 .quiz-container {
-    max-width: 800px;
-    padding: 20px;
-    background-color: #ffffff; /* White */
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Soft shadow */
-    margin-bottom: 20px; /* Added margin-bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .question-card {
-    background-color: #fff; /* White */
-    color: #000;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     margin-bottom: 20px;
-    border: 2px solid #208eef; 
+    width: 80%; /* Adjust the width as needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: left; /* Align text to the left */
 }
 
 .question-text {
-    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
 }
 
-.options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 10px; 
-}
-
-.option-btn {
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #208eef; 
-    color: #fff; 
-    cursor: pointer;
-    transition: background-color 0.3s ease; 
-}
-
-.option-btn:hover {
-    background-color: #2172b1; 
-}
-
-.option-btn.clicked {
-    background-color: #f0ebeb; 
-    border: 2px solid #333333; 
-    color: #333333; 
+.answer-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
 }
 
 #timer {
@@ -116,45 +94,37 @@ h1 {
 }
 
 #submit-btn {
-    display: block;
-    margin: 20px auto; 
-    padding: 12px 24px;
+    display: block; /* Ensure the button is visible */
+    margin-top: 20px;
+    padding: 10px 20px;
     font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50; 
-    color: #ffffff;
     cursor: pointer;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s;
 }
 
 #submit-btn:hover {
-    background-color: #45a049; 
+    background-color: #0056b3;
 }
 
 .submitted-message {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 18px;
     text-align: center;
     margin-top: 20px;
-}
-.message-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.submitted-message {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .time-taken {
     font-size: 18px;
 }
+
+
 /* Smaller font size for smaller screens */
 @media only screen and (max-width: 600px) {
     h1 {

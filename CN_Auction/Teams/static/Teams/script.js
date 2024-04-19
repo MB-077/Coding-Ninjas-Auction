@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
         purseValue = Math.min(100, purseValue); // Ensure purse value does not exceed 100 Cr
     
         // Adjust purse value based on time taken
-        const maxTime = 900; // 15 minutes in seconds
+        const maxTime = 1800; // 30 minutes in seconds
         const timeFactor = 1 - (totalTimeTaken / maxTime); // Calculate the factor based on time taken
         purseValue *= timeFactor; // Adjust purse value based on time taken
         purseValue = Math.round(Math.max(40, purseValue)); // Ensure purse value is at least 40 Cr and round to nearest integer

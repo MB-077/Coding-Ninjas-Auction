@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     # OWN
     'Teams',
     'Players',
-    'Questions',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +60,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             "Teams/templates/Teams",
-            "Questions/templates",
             ],
         'APP_DIRS': True,
         'OPTIONS': {
