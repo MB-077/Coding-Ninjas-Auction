@@ -20,6 +20,7 @@ body {
     backdrop-filter: blur(10px); /* Apply blur effect */
     overflow-y: auto;
     margin-bottom: 20px; /* Add margin between containers */
+    
 }
 
 h2 {

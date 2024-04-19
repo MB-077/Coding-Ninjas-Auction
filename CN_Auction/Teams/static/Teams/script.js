@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function() {
     ];
 
     function displayQuestions() {
-        const optionsContainer = document.getElementById("options");
-        optionsContainer.innerHTML = "";
+        const questionsContainer = document.getElementById("options");
+        questionsContainer.innerHTML = "";
 
         questions.forEach((question, index) => {
             const questionCard = document.createElement("div");
@@ -29,24 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
             questionText.textContent = question.question;
             questionCard.appendChild(questionText);
 
-            const optionsDiv = document.createElement("div");
-            optionsDiv.classList.add("options");
-            question.options.forEach(option => {
-                const optionBtn = document.createElement("button");
-                optionBtn.classList.add("option-btn");
-                optionBtn.textContent = option;
-                optionBtn.addEventListener("click", () => {
-                    const optionBtns = optionBtn.parentElement.querySelectorAll(".option-btn");
-                    optionBtns.forEach(btn => {
-                        btn.classList.remove("clicked");
-                    });
-                    optionBtn.classList.add("clicked");
-                });
-                optionsDiv.appendChild(optionBtn);
-            });
-            questionCard.appendChild(optionsDiv);
+            const answerInput = document.createElement("input");
+            answerInput.classList.add("answer-input");
+            answerInput.placeholder = "Type your answer here...";
+            questionCard.appendChild(answerInput);
 
-            optionsContainer.appendChild(questionCard);
+            questionsContainer.appendChild(questionCard);
         });
     }
 
@@ -90,19 +78,63 @@ document.addEventListener("DOMContentLoaded", function() {
         const endTime = new Date();
         const totalTimeTaken = Math.round((endTime - startTime) / 1000); // Total time taken in seconds
         console.log("Total time taken: " + totalTimeTaken + " seconds");
-
+    
+        // Calculate the number of correct answers
+        let correctAnswers = 0;
+        const answerInputs = document.querySelectorAll(".answer-input");
+        answerInputs.forEach((input, index) => {
+            const userAnswer = input.value.trim().toLowerCase();
+            if (userAnswer === questions[index].correctAnswer.toLowerCase()) {
+                correctAnswers++;
+            }
+        });
+    
+        console.log("Correct answers: " + correctAnswers);
+    
+        // Calculate the purse value based on correct answers and time taken
+        let purseValue = 40 + correctAnswers * 10; // Start with default value and add bonus for correct answers
+        purseValue = Math.min(100, purseValue); // Ensure purse value does not exceed 100 Cr
+    
+        // Adjust purse value based on time taken
+        const maxTime = 900; // 15 minutes in seconds
+        const timeFactor = 1 - (totalTimeTaken / maxTime); // Calculate the factor based on time taken
+        purseValue *= timeFactor; // Adjust purse value based on time taken
+        purseValue = Math.round(Math.max(40, purseValue)); // Ensure purse value is at least 40 Cr and round to nearest integer
+    
+        console.log("Purse value: " + purseValue);
+    
+        // Send data to the backend for storage
+        const formData = new FormData();
+        formData.append('correct_answers', correctAnswers);
+        formData.append('purse_value', purseValue);
+        formData.append('team_id', document.querySelector(".inputBox").value); // Assuming the team ID is entered in an input box
+    
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrfToken // Include the CSRF token in the headers
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle success
+            console.log(data);
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+        });
+    
         // Clear the quiz container
         const quizContainer = document.querySelector(".quiz-container");
         quizContainer.innerHTML = "";
-
+    
         // Display the message
         const messageElement = document.createElement("div");
-        messageElement.textContent = `Submitted successfully!\nTime taken: ${totalTimeTaken} seconds`;
+        messageElement.textContent = `Submitted successfully!\nCorrect answers: ${correctAnswers}\nTime taken: ${totalTimeTaken} seconds\nPurse value: ${purseValue} Cr`;
         messageElement.classList.add("submitted-message"); // Add CSS class
         quizContainer.appendChild(messageElement);
-        
-
-        // Send totalTimeTaken to backend for storage
     }
 
     window.onload = () => {

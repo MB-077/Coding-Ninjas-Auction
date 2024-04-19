@@ -6,9 +6,23 @@ from django.http import JsonResponse
 # Create your views here.
 
 
+# def question_view(request):
+#     return render(request, 'index.html')
 def question_view(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        correct_answers = int(request.POST.get('correct_answers'))
+        purse_value = int(request.POST.get('purse_value'))
+        team_id = int(request.POST.get('team_id'))
 
+        # Update the Team model with correct_answers and purse_value
+        team = Team.objects.get(team_id=team_id)
+        team.correct_answers = correct_answers
+        team.purse_value = purse_value
+        team.save()
+
+        return JsonResponse({'message': 'Quiz submitted successfully!'})
+    else:
+        return render(request, 'index.html')
 
 
 def group_list(request):
