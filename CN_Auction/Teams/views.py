@@ -6,8 +6,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 
-# def question_view(request):
-#     return render(request, 'index.html')
+
 def question_view(request):
     if request.method == 'POST':
         correct_answers = int(request.POST.get('correct_answers'))
@@ -23,6 +22,7 @@ def question_view(request):
         return JsonResponse({'message': 'Quiz submitted successfully!'})
     else:
         return render(request, 'index.html')
+
 
 
 def group_list(request):
@@ -100,42 +100,6 @@ def leaderboard_view(request):
     }
 
     return render(request, 'leaderboard.html', context)
-
-
-
-# def allot_data(request):
-#     if request.method == 'POST':
-#         # Get form data
-#         group_id = request.POST.get('group_id')
-#         group_price = float(request.POST.get('group_price'))
-#         alloted_team_id = request.POST.get('alloted_team_id')
-
-#         # Check if Allotted Team ID field is empty
-#         if not alloted_team_id:
-#             return JsonResponse({'error': 'Please fill out the Allotted Team ID field.'})
-
-#         # Fetch the Team instance based on the ID
-#         try:
-#             alloted_team = Team.objects.get(team_id=alloted_team_id)
-#         except Team.DoesNotExist:
-#             return JsonResponse({'error': 'Allotted Team with given ID does not exist.'})
-
-#         # Check if group price exceeds purse value
-#         if group_price > alloted_team.purse_value:
-#             return JsonResponse({'error': 'Insufficient purse value'})
-
-#         # Create or update Group object
-#         group, created = Group.objects.update_or_create(
-#             group_id=group_id,
-#             defaults={'group_price': group_price, 'alloted_team_id': alloted_team_id}
-#         )
-
-#         alloted_team.save()
-
-#         return redirect('allot_data')  # Redirect to success page after form submission
-    
-#     return render(request, 'allot_data.html')
-
 
 
 
