@@ -3,6 +3,8 @@ from django.db.models import Sum
 from Teams.models import Team
 from Players.models import Group, Individual, Stat
 from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
+
 # Create your views here.
 
 
@@ -25,7 +27,7 @@ def question_view(request):
 
 
 
-
+@staff_member_required
 def group_list(request):
     # Fetch all teams and groups
     teams = Team.objects.all()
@@ -69,6 +71,7 @@ def group_list(request):
 
 
 
+@staff_member_required
 def leaderboard_view(request):
     # Get all teams
     all_teams = Team.objects.all()
@@ -104,6 +107,7 @@ def leaderboard_view(request):
 
 
 
+@staff_member_required
 def allot_data(request):
     if request.method == 'POST':
         # Get form data
