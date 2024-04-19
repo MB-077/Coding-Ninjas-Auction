@@ -11,6 +11,7 @@ class Team(models.Model):
 
    def __str__(self):
       return self.team_name
+        
 
 
 class Student(models.Model):

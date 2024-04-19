@@ -25,17 +25,38 @@ $(document).ready(function() {
             question: "What is the largest planet in our solar system?",
             options: ["Earth", "Mars", "Jupiter", "Saturn"],
             correctAnswer: "Jupiter"
+        },
+        {
+            question: "What is the capital of France?",
+            options: ["Paris", "London", "Berlin", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Jupiter"
+        },
+        {
+            question: "What is the capital of France?",
+            options: ["Paris", "London", "Berlin", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            options: ["Earth", "Mars", "Jupiter", "Saturn"],
+            correctAnswer: "Jupiter"
         }
         // Add more questions as needed
     ];
 
     function displayQuestions() {
         const questionsContainer = document.getElementById("options");
+        document.querySelector(".quiz-container").classList.add("show-scroll");
         questionsContainer.innerHTML = "";
 
         questions.forEach((question, index) => {
             const questionCard = document.createElement("div");
-            questionCard.classList.add("question-card");
+            questionCard.classList.add("question-card", "text-center", "p-4", "mb-4");
 
             const questionText = document.createElement("p");
             questionText.classList.add("question-text");
@@ -43,7 +64,7 @@ $(document).ready(function() {
             questionCard.appendChild(questionText);
 
             const answerInput = document.createElement("input");
-            answerInput.classList.add("answer-input");
+            answerInput.classList.add("answer-input", "border", "border-gray-300", "rounded-md", "px-3", "py-2", "w-full", "mt-2");
             answerInput.placeholder = "Type your answer here...";
             questionCard.appendChild(answerInput);
 
@@ -87,6 +108,7 @@ $(document).ready(function() {
         timerElement.style.textAlign = "right";
         timerElement.style.marginTop = "20px";
         timerElement.style.marginRight = "20px"; // Add margin-right
+        timerElement.style.color = "white"; // Set font color to white
         const quizContainer = document.querySelector(".quiz-container");
         quizContainer.insertBefore(timerElement, quizContainer.firstChild); // Insert timer as first child
 

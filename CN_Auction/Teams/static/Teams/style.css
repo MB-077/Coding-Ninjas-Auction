@@ -13,23 +13,50 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+
+    /* Style scrollbar for WebKit browsers */
+    scrollbar-width: thin; /* Set width of scrollbar */
+    scrollbar-color: #888 transparent; /* Set color of scrollbar handle and track */
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+    background: transparent; /* Set background color of scrollbar track */
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+    background: #888; /* Set color of scrollbar handle */
+    border-radius: 6px; /* Set border radius of scrollbar handle */
+}
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Set color of scrollbar handle on hover */
 }
 
 .container {
-    text-align: center;
-    margin-bottom: 20px; /* Adjust margin-bottom as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full viewport height */
+    max-width: 80%; /* Limit width to 80% of viewport */
+    margin: 0 auto; /* Center container horizontally */
 }
-.inputBox{
+
+.inputBox {
     margin-bottom: 1rem;
     text-align: center;
     border: 2px solid black;
+    width: 100%; /* Adjust width */
+    padding: 8px; /* Adjust padding */
 }
+
 .header-container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column; /* Arrange items in a column */
     align-items: center;
@@ -60,7 +87,10 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 50px; /* Add padding to push content below URL bar */
+    max-height: calc(100vh - 120px); /* Limit height */
 }
+
 
 .question-card {
     margin-bottom: 20px;
@@ -69,8 +99,8 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
     text-align: left; /* Align text to the left */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
 }
 
 .question-text {
@@ -91,6 +121,7 @@ h1 {
     font-size: 24px;
     text-align: right;
     margin-right: 20px;
+    color: white; /* Change font color to white */
 }
 
 #submit-btn {
@@ -115,7 +146,7 @@ h1 {
     text-align: center;
     margin-top: 20px;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -123,7 +154,6 @@ h1 {
 .time-taken {
     font-size: 18px;
 }
-
 
 /* Smaller font size for smaller screens */
 @media only screen and (max-width: 600px) {

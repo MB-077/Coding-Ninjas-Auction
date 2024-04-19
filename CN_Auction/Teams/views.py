@@ -25,6 +25,7 @@ def question_view(request):
 
 
 
+
 def group_list(request):
     # Fetch all teams and groups
     teams = Team.objects.all()
