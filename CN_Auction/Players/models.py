@@ -63,10 +63,12 @@ def enter_data():
       "FieldingRating" : int
    }
    
-   df = pd.read_csv('D:\\Code Repository\\Coding-Ninjas-Auction\\CN_Auction\\Players\\data.csv', dtype=dtype_dict)
+   df = pd.read_csv(r'Players\data.csv', dtype=dtype_dict) # Players\data.csv
 
    non_wk_groups = list(range(0, 59))
    available_groups = list(range(0, 59))
+
+   print("\nEntering Data...\nIt May Take a Few Minutes...")
 
    for g in range(0, 59):
       Group.objects.create(group_id=g)
@@ -103,7 +105,8 @@ def enter_data():
             available_groups.remove(group)
          if group in non_wk_groups:
             non_wk_groups.remove(group)
-
+      
+   print("\nDone...\nData Has Been Entered :)")
       # --------------------------------------------------------------------------
 
 def check():
