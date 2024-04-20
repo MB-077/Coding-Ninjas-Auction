@@ -12,6 +12,20 @@ function validateTeamID() {
 }
 
 $(document).ready(function() {
+    $(document).ready(function() {
+        function validateTeamID() {
+            // Check if Team ID field is empty
+            var teamID = $('#team-id').val();
+            if (teamID.trim() === '') {
+                alert('Please fill out the Team ID field.');
+                return false;
+            } else {
+                $('#error-message').text(''); // Clear error message if there was one
+                return true;
+            }
+        }
+    });
+    
     const timerElement = document.createElement("div"); // Declare timerElement globally
     let startTime, timerInterval;
 

@@ -9,22 +9,7 @@
     <link rel="stylesheet" href="{% static 'Teams/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const csrfToken = "{{ csrf_token }}";
-
-        // JavaScript validation logic
-        $(document).ready(function() {
-            function validateTeamID() {
-                // Check if Team ID field is empty
-                var teamID = $('#team-id').val();
-                if (teamID.trim() === '') {
-                    alert('Please fill out the Team ID field.');
-                    return false;
-                } else {
-                    $('#error-message').text(''); // Clear error message if there was one
-                    return true;
-                }
-            }
-        });
+        const csrfToken = "{{ csrf_token }}";        
     </script>
 </head>
 <body>
