@@ -1,138 +1,191 @@
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5; /* Light gray background */
-    color: #333333; /* Dark gray text */
+    background-color: #f5f5f5;
+    color: #333333;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure full viewport height */
-    margin: 0; /* Remove default margin */
-
-    background-image: url('./stadiumImg2.jpg');
+    height: 100vh;
+    margin: 0;
+    background-image: url('./glassmorph.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
-    /* Style scrollbar for WebKit browsers */
-    scrollbar-width: thin; /* Set width of scrollbar */
-    scrollbar-color: #888 transparent; /* Set color of scrollbar handle and track */
 }
 
-/* Track */
+/* Scrollbar Styles */
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
 body::-webkit-scrollbar-track {
-    background: transparent; /* Set background color of scrollbar track */
+    background: transparent; /* Make scrollbar transparent */
+    background-color: rgb(0, 61, 89,1);
 }
 
-/* Handle */
 body::-webkit-scrollbar-thumb {
-    background: #888; /* Set color of scrollbar handle */
-    border-radius: 6px; /* Set border radius of scrollbar handle */
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    border: 3px solid transparent;
 }
 
-/* Handle on hover */
 body::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Set color of scrollbar handle on hover */
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* Container Styles */
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure full viewport height */
-    max-width: 80%; /* Limit width to 80% of viewport */
-    margin: 0 auto; /* Center container horizontally */
+    height: 100vh;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
-.inputBox {
-    margin-bottom: 1rem;
-    text-align: center;
-    border: 2px solid black;
-    width: 100%; /* Adjust width */
-    padding: 8px; /* Adjust padding */
-}
-
+/* Header Styles */
 .header-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly more opaque background */
+    padding: 40px;
+    border-radius: 30px; /* Increased border radius for a softer appearance */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Added a more prominent box shadow */
     display: flex;
-    flex-direction: column; /* Arrange items in a column */
+    flex-direction: column;
     align-items: center;
+    animation: fadeInUp 1s ease;
 }
 
 h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 42px; /* Slightly increased font size for better emphasis */
+    margin-bottom: 30px; /* Increased margin for better spacing */
+    color: #000000; /* Blue color for header text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Added a subtle text shadow */
 }
+
+.inputBox {
+    margin-bottom: 2rem; /* Increased bottom margin for better spacing */
+    text-align: center;
+    border: 2px solid #000000;
+    width: calc(100% - 24px);
+    padding: 16px; /* Increased padding for a more comfortable input area */
+    font-size: 20px; /* Increased font size for better readability */
+    border-radius: 10px; /* Increased border radius for a softer appearance */
+    background-color: rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjusted box shadow for a subtle effect */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Added transition for smoother hover effects */
+}
+
+.inputBox:focus {
+    outline: none;
+    border-color: #007BFF; /* Blue border color on focus */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2); /* Adjusted box shadow on focus for emphasis */
+}
+
+.inputBox::placeholder {
+    color: #888; /* Custom placeholder color */
+    font-style: italic; /* Italicize the placeholder text */
+}
+
+/* Highlight question container on typing answer */
+.answer-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #000000;
+    transition: box-shadow 0.3s ease;
+}
+
 
 #start-btn {
     padding: 12px 24px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50; /* Green */
-    color: #ffffff; /* White */
+    background-color: #007bff;
+    color: #000000;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease;
     margin-bottom: 20px;
 }
 
 #start-btn:hover {
-    background-color: #45a049; /* Darker shade of green on hover */
+    background-color: rgba(76, 175, 100, 1);
 }
 
+/* Quiz Container Styles */
 .quiz-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px; /* Add padding to push content below URL bar */
-    max-height: calc(100vh - 120px); /* Limit height */
+    padding-top: 20px;
+    max-height: calc(100vh - 200px);
 }
-
 
 .question-card {
     margin-bottom: 20px;
-    width: 80%; /* Adjust the width as needed */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: left; /* Align text to the left */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    width: 90%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.5s ease;
 }
 
 .question-text {
     font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .answer-input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #000000;
+    border-radius: 6px;
     box-sizing: border-box;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
 #timer {
-    margin-top: 20px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
     font-size: 24px;
-    text-align: right;
-    margin-right: 20px;
-    color: white; /* Change font color to white */
+    color: #ffffff;
 }
 
 #submit-btn {
-    display: block; /* Ensure the button is visible */
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
+    display: block;
+    margin: 20px auto 40px; /* Set top margin to 20px, bottom margin to 40px, and center horizontally */
+    padding: 12px 24px;
+    font-size: 18px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -141,18 +194,85 @@ h1 {
     background-color: #0056b3;
 }
 
-.submitted-message {
-    font-size: 18px;
-    text-align: center;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Animations */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
 }
 
-.time-taken {
-    font-size: 18px;
+/* General Styles */
+.quiz-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* General Styles */
+.submitted-message {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: #333;
+    animation: bounceIn 1s ease;
+}
+
+.submitted-text {
+    font-weight: bold;
+    font-size: 28px;
+    color: #007BFF; /* Blue color for "Submitted successfully" */
+    cursor: pointer; /* Add cursor pointer for interactivity */
+    transition: transform 0.3s; /* Add transition for smoother hover effect */
+}
+
+.submitted-text:hover {
+    transform: scale(1.1); /* Make the "Submitted successfully" text a bit bigger on hover */
+}
+
+.submitted-stats {
+    margin-top: 20px; /* Adjusted margin for better spacing */
+}
+
+.submitted-stat {
+    margin: 10px 0; /* Increased margin for better spacing */
+    cursor: pointer; /* Add cursor pointer for interactivity */
+    transition: transform 0.3s; /* Add transition for smoother hover effect */
+}
+
+.submitted-stat:hover {
+    transform: scale(1.1); /* Make the individual stat a bit bigger on hover */
+}
+
+.submitted-stat span {
+    font-weight: bold;
+    color: #555; /* Dark gray color for labels */
+}
+
+.submitted-stat .value {
+    color: #333; /* Dark color for values */
+}
+
+/* Keyframe animation for bounceIn effect */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Smaller font size for smaller screens */
@@ -160,22 +280,22 @@ h1 {
     h1 {
         font-size: 24px;
     }
-    
+
     .quiz-container {
-        padding: 10px;
+        padding: 20px;
     }
 
     .question-card {
-        padding: 15px;
+        padding: 20px;
     }
 
-    .option-btn {
-        padding: 10px 15px;
-        font-size: 14px;
+    .answer-input {
+        padding: 10px;
+        font-size: 16px;
     }
 
     #submit-btn {
-        padding: 10px 20px;
-        font-size: 14px;
+        padding: 12px 40px;
+        font-size: 16px;
     }
 }

@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Allot Data</title>
 <link rel="stylesheet" type="text/css" href="{% static 'Teams/allot_data.css' %}">
+<link rel="shortcut icon" type="image/jpg" href="{% static 'Teams/favicon.ico' %}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -52,6 +53,7 @@
                         alert('This group has already been assigned to a team.');
                     } else {
                         // Redirect to success page
+                        alert('Data assigned successfully.');
                         window.location.href = '/allot_data/';
                     }
                 },
@@ -82,8 +84,9 @@
             <input type="number" id="alloted_team_id" name="alloted_team_id" required>
         </div>
         <input type="submit" value="Submit">
+
+
     </form>
 </div>
-
 </body>
 </html>

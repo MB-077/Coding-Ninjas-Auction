@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group List</title>
     <link rel="stylesheet" href="{% static 'Teams/group_list.css' %}">
+    <link rel="shortcut icon" type="image/jpg" href="{% static 'Teams/favicon.ico' %}">
 </head>
 <body>
     <div class="container">
@@ -15,7 +16,9 @@
             <h2>Team Purse Values</h2>
             <ul>
                 {% for team in teams %}
-                <li>{{ team.team_name }}: {{ team.purse_value }} Cr</li>
+                <li>
+                    <span class="team-name">{{ team.team_name }}</span>: <span class="amount-value">{{ team.purse_value }} Cr</span> 
+                </li>
                 {% endfor %}
             </ul>
         </div>

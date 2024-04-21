@@ -67,6 +67,7 @@ $(document).ready(function() {
         const questionsContainer = document.getElementById("options");
         document.querySelector(".quiz-container").classList.add("show-scroll");
         questionsContainer.innerHTML = "";
+        
 
         questions.forEach((question, index) => {
             const questionCard = document.createElement("div");
@@ -182,14 +183,46 @@ $(document).ready(function() {
             console.error('Error:', error);
         });
     
-        // Clear the quiz container
+       // Clear the quiz container
         const quizContainer = document.querySelector(".quiz-container");
         quizContainer.innerHTML = "";
-    
-        // Display the message
+
+        // Create the message element
         const messageElement = document.createElement("div");
-        messageElement.textContent = `Submitted successfully!\nCorrect answers: ${correctAnswers}\nTime taken: ${totalTimeTaken} seconds\nPurse value: ${purseValue}`;
-        messageElement.classList.add("submitted-message"); // Add CSS class
+        messageElement.classList.add("submitted-message");
+
+        // Create the submitted text element
+        const submittedText = document.createElement("p");
+        submittedText.textContent = "Submitted Successfully!";
+        submittedText.classList.add("submitted-text");
+        messageElement.appendChild(submittedText);
+
+        // Create and append the submitted stats
+        const submittedStats = document.createElement("div");
+        submittedStats.classList.add("submitted-stats");
+
+        // Create and append correct answers stat
+        const correctAnswersStat = document.createElement("p");
+        correctAnswersStat.innerHTML = `<span>Correct answers:</span> <span class="value">${correctAnswers}</span>`;
+        correctAnswersStat.classList.add("submitted-stat");
+        submittedStats.appendChild(correctAnswersStat);
+
+        // Create and append time taken stat
+        const timeTakenStat = document.createElement("p");
+        timeTakenStat.innerHTML = `<span>Time taken:</span> <span class="value">${totalTimeTaken} seconds</span>`;
+        timeTakenStat.classList.add("submitted-stat");
+        submittedStats.appendChild(timeTakenStat);
+
+        // Create and append purse value stat
+        const purseValueStat = document.createElement("p");
+        purseValueStat.innerHTML = `<span>Purse value:</span> <span class="value">${purseValue} Cr</span>`;
+        purseValueStat.classList.add("submitted-stat");
+        submittedStats.appendChild(purseValueStat);
+
+        // Append submitted stats to the message element
+        messageElement.appendChild(submittedStats);
+
+        // Append the message element to the quiz container
         quizContainer.appendChild(messageElement);
     }
 

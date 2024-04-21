@@ -65,12 +65,12 @@ def enter_data():
    
    df = pd.read_csv(r'Players\data.csv', dtype=dtype_dict) # Players\data.csv
 
-   non_wk_groups = list(range(0, 59))
-   available_groups = list(range(0, 59))
+   non_wk_groups = list(range(1, 60))
+   available_groups = list(range(1, 60))
 
    print("\nEntering Data...\nIt May Take a Few Minutes...")
 
-   for g in range(0, 59):
+   for g in range(1, 60):
       Group.objects.create(group_id=g)
 
    for i in range(len(df)):

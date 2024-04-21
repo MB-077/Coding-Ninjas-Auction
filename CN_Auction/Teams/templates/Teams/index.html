@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
+    <link rel="shortcut icon" type="image/jpg" href="{% static 'Teams/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'Teams/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -17,7 +18,7 @@
         <div class="header-container">
             <h1>CNTC IPL Auction</h1>
             <form id="team-form" action="">
-                <input type="text" placeholder="Team ID" class="inputBox" id="team-id">
+                <input type="text" id="team-id" class="inputBox" placeholder="Enter Team ID">
                 <div id="error-message"></div> <!-- Error message container -->
             </form>
             <button id="start-btn">Start</button>
