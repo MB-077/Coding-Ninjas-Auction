@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
 
 import os, sys
 from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+
 
 
 
@@ -27,5 +27,6 @@ sys.path.append('vir_env\Lib\site-packages')
 # poiting to the project settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CN_Auction.settings")
 
+application = get_wsgi_application()
 # wsgi.py file end
 # ===================
