@@ -34,6 +34,8 @@ class Individual(models.Model):
    player_id = models.IntegerField(primary_key=True)
    player_name = models.CharField(max_length=50)
    player_price = models.FloatField(default=0.0)
+   player_role = models.CharField(max_length=50, default='Player')
+   player_team = models.CharField(max_length=50, default='None')
    group = models.ForeignKey('Group', on_delete=models.CASCADE, related_name='players')
    
    def __str__(self) -> str:
@@ -53,66 +55,55 @@ class Stat(models.Model):
 
 def enter_data():
    dtype_dict = {
-      "PLAYER" : str,
-      "ROLE" : str,
-      "PRICE" : float,
-      "TEAM" : str,
-      "IsWicketKeeper" : bool,
-      "BowlingRating" : int,
-      "BattingRating" : int,
-      "FieldingRating" : int
+      "PLAYER": str,
+      "ROLE": str,
+      "PRICE": float,
+      "TEAM": str,
+      "IsWicketKeeper": bool,
+      "BowlingRating": int,
+      "BattingRating": int,
+      "FieldingRating": int,
+      "GROUP_ID": int,
+      "PLAYER_ID": int  # Add PLAYER_ID column to your CSV
    }
    
-   df = pd.read_csv(r'Players\data.csv', dtype=dtype_dict) # Players\data.csv
-
-   non_wk_groups = list(range(1, 60))
-   available_groups = list(range(1, 60))
+   df = pd.read_csv(r'Players\data.csv', dtype=dtype_dict)  # Load CSV
 
    print("\nEntering Data...\nIt May Take a Few Minutes...")
 
-   for g in range(1, 60):
+   # Create groups
+   for g in df['GROUP_ID'].unique():
       Group.objects.create(group_id=g)
 
    for i in range(len(df)):
-      if df.at[i, "IsWicketKeeper"]:
-         group = random.choice(non_wk_groups)
-         Group.objects.filter(pk=group).update(has_wicketkeeper=True)
-         if group in non_wk_groups:
-            non_wk_groups.remove(group)
-      else :
-         group = random.choice(available_groups)
-
-      # Updates Group Points
-      player_stats = df.at[i, "BowlingRating"] + df.at[i, "BattingRating"] + df.at[i, "FieldingRating"]
+      # Extract player information from the DataFrame
+      player_id = df.at[i, "PLAYER_ID"]
+      player_name = df.at[i, "PLAYER"]
       player_price = df.at[i, "PRICE"]
+      group_id = df.at[i, "GROUP_ID"]
 
-      groupPoints = Group.objects.get(pk=group).group_points
-      groupPrice  = Group.objects.get(pk=group).group_price
-      
-      Group.objects.filter(pk=group).update(group_points=f'{groupPoints+player_stats}')
-      Group.objects.filter(pk=group).update(group_price=f'{groupPrice+player_price}')
+      # Update Group Points and Price
+      player_stats = df.at[i, "BowlingRating"] + df.at[i, "BattingRating"] + df.at[i, "FieldingRating"]
+      group = Group.objects.get(group_id=group_id)
+      group.group_points += player_stats
+      group.group_price += player_price
+      group.save()
 
+      # Create Individual and Stat instances
+      individual = Individual.objects.create(
+         player_id=player_id,  # Assigning the provided player_id
+         player_name=player_name,
+         player_price=player_price,
+         player_role=df.at[i, "ROLE"],
+         player_team=df.at[i, "TEAM"],
+         group=group
+      )
+      Stat.objects.create(
+         fielding=df.at[i, "FieldingRating"],
+         bowling=df.at[i, "BowlingRating"],
+         batting=df.at[i, "BattingRating"],
+         wicketkeeper=df.at[i, "IsWicketKeeper"],
+         player=individual
+      )
 
-      
-      Individual.objects.create(player_id=i, player_name=df.at[i, "PLAYER"],
-                                 player_price=player_price, group=Group.objects.get(pk=group))
-      Stat.objects.create(fielding=df.at[i, "FieldingRating"], bowling=df.at[i, "BowlingRating"],
-                           batting=df.at[i, "BattingRating"], wicketkeeper=df.at[i, "IsWicketKeeper"],
-                           player=Individual.objects.get(pk=i))
-
-      if Individual.objects.filter(group_id=f'{group}').count() >= 4:
-         if group in available_groups:
-            available_groups.remove(group)
-         if group in non_wk_groups:
-            non_wk_groups.remove(group)
-      
    print("\nDone...\nData Has Been Entered :)")
-      # --------------------------------------------------------------------------
-
-def check():
-   wks = Stat.objects.filter(wicketkeeper='True')
-   groups = {22: 0, 20: 0, 15: 0, 1: 0, 55: 0, 40: 0, 9: 0, 27: 0, 5: 0, 10: 0, 38: 0, 17: 0, 7: 0, 11: 0} # {0: 0, 6: 0, 10: 0, 11: 0, 14: 0, 18: 0, 21: 0, 32: 0, 36: 0, 44: 0, 46: 0, 1: 0, 22: 0}
-   for wk in wks:
-      # groups[wk.player.group.group_id] = 0
-      groups[wk.player.group.group_id] += 1
-   print(groups)
