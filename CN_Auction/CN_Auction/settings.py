@@ -94,7 +94,6 @@ WSGI_APPLICATION = 'CN_Auction.wsgi.application'
 
 
 DATABASES = {
-    # "default": dj_database_url.parse(os.environ.get("postgres://auction_database_user:S0R4wbvNzVvWUkihksrEYBHrMZ6UgoZ4@dpg-coj1il5jm4es73a0l5qg-a.oregon-postgres.render.com/auction_database"))
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
@@ -109,7 +108,9 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
+   
 
+# DATABASES["default"] = dj_database_url.parse(os.environ.get("postgres://auction_database_user:S0R4wbvNzVvWUkihksrEYBHrMZ6UgoZ4@dpg-coj1il5jm4es73a0l5qg-a.oregon-postgres.render.com/auction_database"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
