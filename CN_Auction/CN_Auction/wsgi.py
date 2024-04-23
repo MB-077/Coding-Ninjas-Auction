@@ -7,16 +7,10 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
 """
 
-import os, sys
+import os
+
 from django.core.wsgi import get_wsgi_application
 
-# add the hellodjango project path into the sys.path
-sys.path.append('CN_Auction\CN_Auction\hellodjango')
-
-# add the virtualenv site-packages path to the sys.path
-sys.path.append('vir_env\Lib\site-packages')
-
-# poiting to the project settings
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CN_Auction.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CN_Auction.settings')
 
 application = get_wsgi_application()
