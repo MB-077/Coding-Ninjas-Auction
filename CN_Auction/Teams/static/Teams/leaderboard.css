@@ -4,9 +4,9 @@ body {
     padding: 0;
     background: url('./glassmorph.jpg');
     overflow: auto; /* Hide scrollbar */
-    background-size: cover; /* Ensure background image covers the entire body */
+    background-size: auto; /* Ensure background image covers the entire body */
     background-position: center; /* Center the background image */
-    backdrop-filter: blur(10px); /* Apply blur effect */
+    backdrop-filter: blur(10px); 
     scrollbar-width: thin; /* Thin scrollbar */
 }
 
