@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from Teams.models import Team
 import pandas as pd
-import random
+
 # from django.db.models.signals import pre_save
 # from django.dispatch import receiver
 # from django.core.exceptions import ValidationError

@@ -138,9 +138,18 @@ def allot_data(request):
             group_id=group_id,
             defaults={'group_price': group_price, 'alloted_team_id': alloted_team_id}
         )
-
+        
         alloted_team.save()
 
-        return JsonResponse({})  # Empty response for success
+        # Create or update Team object
+        team = Team.objects.get(team_id=alloted_team_id)
+        group_points = Group.objects.get(group_id=group_id).group_points
+        print(team.team_id, group_points)
 
+        # Update or create the Team object with the new points_scored value
+        team.points_scored += group_points
+        team.save()
+        
+        return JsonResponse({})  # Empty response for successful POST request
+        
     return render(request, 'allot_data.html')
