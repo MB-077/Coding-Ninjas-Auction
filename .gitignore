@@ -2,4 +2,4 @@ venv/
 vir_env/
 db.sqlite3
 .env
-Teams/Team_Data.csv/
+# Teams/Team_Data.csv/
